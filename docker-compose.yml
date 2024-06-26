@@ -1,0 +1,22 @@
+services:
+  fastapi-app:
+    build: .
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: postgresql://admin:something1@db:5432/booksdb
+    volumes:
+      - .:/app
+    
+  db:
+    image: postgres:13
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: booksdb
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: something1
+    ports:
+      - "5432:5432"
